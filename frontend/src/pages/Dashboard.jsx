@@ -24,7 +24,7 @@ const Dashboard = () => {
 
         // Fetch user data
         const userResponse = await axios.get(
-          "http://localhost:3000/api/auth/user",
+          "https://x-media-bvtm.onrender.com",
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -34,7 +34,7 @@ const Dashboard = () => {
 
         // Fetch all posts
         const postsResponse = await axios.get(
-          "http://localhost:3000/api/auth/posts"
+          "https://x-media-bvtm.onrender.com"
         );
         setPosts(postsResponse.data);
       } catch (error) {
@@ -56,7 +56,7 @@ const Dashboard = () => {
   const handleDeletePost = async (postId) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:3000/api/auth/posts/${postId}`, {
+      await axios.delete('https://x-media-bvtm.onrender.com', {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPosts(posts.filter((post) => post._id !== postId)); // Remove deleted post from state
