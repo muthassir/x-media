@@ -1,0 +1,62 @@
+@import "tailwindcss";
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  margin: 0;
+  display: flex; 
+  justify-content: center;
+  align-items: center;
+}
+button:hover{
+  background: transparent;
+  color: black;
+  border: 2px solid green;
+  transition: 1s;
+}
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+h2{
+  font-size: 2.5em;
+}
+.inp{
+  @apply w-64 p-2 m-4  border-2 rounded
+}
+.btn{
+  @apply  w-64 bg-green-600 text-white  h-10 rounded cursor-pointer
+}
+
+.login{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+
+.dashboard{
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  width: 100%;
+  height: 100%;
+  justify-content: space-between;
+  text-align: center;
+}
+.profileBtn{
+   cursor: pointer;
+}
+.profileBtn:hover{
+  border: none;
+  background-color: #5e6e7f;
+  padding: 5px;
+  border-radius: 50px;
+  color: white;
+}
