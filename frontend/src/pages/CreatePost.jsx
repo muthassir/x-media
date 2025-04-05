@@ -15,7 +15,7 @@ export const CreatePost = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:3000/api/auth/posts",
+         'https://x-media-bvtm.onrender.com',
         { content: newPost },
         { headers: { Authorization: `Bearer ${token}` } }
       );
