@@ -13,7 +13,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
+        "https://x-media-bvtm.onrender.com",
         { email, username, password }
       );
       localStorage.setItem("token", response.data.token);
