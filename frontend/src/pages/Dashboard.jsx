@@ -26,7 +26,11 @@ const Dashboard = () => {
 
         // Fetch user data
         const userResponse = await axios.get(
+<<<<<<< HEAD
           `${baseURLS}/user`,
+=======
+          "https://x-media-bvtm.onrender.com",
+>>>>>>> 88f9dba249ab2f404be4fc7a38029cb6f7c3c668
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -36,7 +40,11 @@ const Dashboard = () => {
 
         // Fetch all posts
         const postsResponse = await axios.get(
+<<<<<<< HEAD
           `${baseURLS}/posts`
+=======
+          "https://x-media-bvtm.onrender.com"
+>>>>>>> 88f9dba249ab2f404be4fc7a38029cb6f7c3c668
         );
         setPosts(postsResponse.data);
       } catch (error) {
@@ -58,7 +66,11 @@ const Dashboard = () => {
   const handleDeletePost = async (postId) => {
     try {
       const token = localStorage.getItem("token");
+<<<<<<< HEAD
       await axios.delete(`${baseURLS}/posts/${postId}`, {
+=======
+      await axios.delete('https://x-media-bvtm.onrender.com', {
+>>>>>>> 88f9dba249ab2f404be4fc7a38029cb6f7c3c668
         headers: { Authorization: `Bearer ${token}` },
       });
       setPosts(posts.filter((post) => post._id !== postId)); // Remove deleted post from state

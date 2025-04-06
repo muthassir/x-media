@@ -11,7 +11,11 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+<<<<<<< HEAD
             const response = await axios.post(`${baseURLS}/login`, { email, password });
+=======
+            const response = await axios.post('https://x-media-bvtm.onrender.com', { email, password });
+>>>>>>> 88f9dba249ab2f404be4fc7a38029cb6f7c3c668
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
             navigate('/dashboard');

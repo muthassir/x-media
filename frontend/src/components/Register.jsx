@@ -16,7 +16,11 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
+<<<<<<< HEAD
         `${baseURLS}/register`,
+=======
+        "https://x-media-bvtm.onrender.com",
+>>>>>>> 88f9dba249ab2f404be4fc7a38029cb6f7c3c668
         { email, username, password }
       );
       localStorage.setItem("token", response.data.token);

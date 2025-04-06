@@ -18,7 +18,11 @@ export const CreatePost = () => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
+<<<<<<< HEAD
         `${baseURLS}/posts`,
+=======
+         'https://x-media-bvtm.onrender.com',
+>>>>>>> 88f9dba249ab2f404be4fc7a38029cb6f7c3c668
         { content: newPost },
         { headers: { Authorization: `Bearer ${token}` } }
       );
