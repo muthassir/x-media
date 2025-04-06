@@ -8,12 +8,15 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const baseURLS = "https://x-media-bvtm.onrender.com"
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
+        `${baseURLS}/register`,
         { email, username, password }
       );
       localStorage.setItem("token", response.data.token);

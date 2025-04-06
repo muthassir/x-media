@@ -9,13 +9,16 @@ export const CreatePost = () => {
   const [error, setError] = useState("");
   const [posts, setPosts] = useState([]);
   const navigate = useNavigate()
+  const baseURLS = "https://x-media-bvtm.onrender.com"
+
+
 
   const handlePostSubmit = async (e) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:3000/api/auth/posts",
+        `${baseURLS}/posts`,
         { content: newPost },
         { headers: { Authorization: `Bearer ${token}` } }
       );
