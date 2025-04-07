@@ -5,6 +5,7 @@ import Register from "./components/Register";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { CreatePost } from "./pages/CreatePost";
+// import Editpost from "./pages/Editpost";
 
 function App() {
   return (
@@ -42,6 +43,14 @@ function App() {
             </ProtectedRoute>
           }
         />
+       {/* <Route
+          path="/editpost"
+          element={
+            <ProtectedRoute>
+              <Editpost />
+            </ProtectedRoute>
+          }
+        /> */}
 
         <Route
           path="*"

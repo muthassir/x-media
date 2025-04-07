@@ -111,6 +111,29 @@ router.get('/posts', async (req, res) => {
     }
 });
 
+// Edit Post (Protected)
+router.put('/posts/:id', authMiddleware, async (req, res) => {
+    const { content } = req.body;
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        if (post.user.toString() !== req.user.userId) {
+            return res.status(403).json({ message: 'Unauthorized to edit this post' });
+        }
+
+        post.content = content;
+        await post.save();
+
+        res.json({ message: 'Post updated', post });
+    } catch (error) {
+        console.error('Edit post error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 // Delete Post (Protected)
 router.delete('/posts/:id', authMiddleware, async (req, res) => {
     try {

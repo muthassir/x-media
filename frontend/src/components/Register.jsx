@@ -10,7 +10,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const baseURLS = "https://x-media-bvtm.onrender.com"
-  // const localHost = "http://localhost:3000"
+  const localHost = "http://localhost:3000"
 
 
 
@@ -18,7 +18,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `${baseURLS}/api/auth/register`,
+        `${baseURLS || localHost}/api/auth/register`,
         { email, username, password }
       );
       localStorage.setItem("token", response.data.token);

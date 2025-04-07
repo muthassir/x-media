@@ -12,7 +12,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const baseURLS = "https://x-media-bvtm.onrender.com"
-  // const localHost = "http://localhost:3000"
+  const localHost = "http://localhost:3000"
 
   const [switching, setSwitching] = useState(false);
 
@@ -27,7 +27,7 @@ const Dashboard = () => {
 
         // Fetch user data
         const userResponse = await axios.get(
-          `${baseURLS}/api/auth/user`,
+          `${baseURLS || localHost}/api/auth/user`,
 
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -38,7 +38,7 @@ const Dashboard = () => {
 
         // Fetch all posts
         const postsResponse = await axios.get(
-          `${baseURLS}/api/auth/posts`
+          `${baseURLS || localHost}/api/auth/posts`
         );
         setPosts(postsResponse.data);
       } catch (error) {
@@ -60,7 +60,7 @@ const Dashboard = () => {
   const handleDeletePost = async (postId) => {
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`${baseURLS}/api/auth/posts/${postId}`, {
+      await axios.delete(`${baseURLS || localHost}/api/auth/posts/${postId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPosts(posts.filter((post) => post._id !== postId)); // Remove deleted post from state

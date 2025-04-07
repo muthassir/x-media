@@ -2,6 +2,7 @@ import React from 'react'
 import logo from "../assets/InShot_20250406_155054086.png"
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router-dom';
+import { IoArrowBack } from 'react-icons/io5'
 import axios from "axios";
 
 
@@ -12,7 +13,7 @@ export const CreatePost = () => {
   const [image, setImage] = useState(null); // State for the image file
   const navigate = useNavigate()
   const baseURLS = "https://x-media-bvtm.onrender.com"
-  // const localHost = "http://localhost:3000"
+  const localHost = "http://localhost:3000"
 
   const cloudName = 'de13d1vnc'
   const uploadPreset = 'my_upload_preset'
@@ -49,7 +50,7 @@ export const CreatePost = () => {
 
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        `${baseURLS}/api/auth/posts`,
+        `${baseURLS || localHost }/api/auth/posts`,
         { content: newPost, imageUrl }, // Send both content and imageUrl
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -75,7 +76,7 @@ export const CreatePost = () => {
                         <textarea
                             value={newPost}
                             onChange={(e) => setNewPost(e.target.value)}
-                            placeholder="Write your post..."
+                            placeholder="Add a caption..."
                             required
                             style={{ width: '100%', padding: '10px', minHeight: '100px', marginTop: '15px', border: '2px solid black' }}
                         />
@@ -91,7 +92,7 @@ export const CreatePost = () => {
                             className='rounded'
                             style={{ padding: '10px 20px', background: 'yellow', border: 'none', marginTop: '10px', cursor: "pointer"}}
                         >
-                            Post
+                            Share
                         </button>
                     
                        </div>
@@ -100,7 +101,7 @@ export const CreatePost = () => {
                     className='rounded'
                     style={{ padding: '10px 20px', background: '#d21f3c', border: 'none', marginTop: '10px', cursor: "pointer"}}
                 >
-                    Back
+                   <IoArrowBack size={30} />
                 </button></Link>  
                 <img src={logo} alt="logo" className='logo' />           
                     </div>

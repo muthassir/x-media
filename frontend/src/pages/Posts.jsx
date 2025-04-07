@@ -2,10 +2,18 @@ import React from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
 import { CiMenuKebab } from "react-icons/ci";
 import { useState } from "react";
+import Editpost from "./Editpost";
+
 
 const Posts = ({ posts, handleDeletePost, userData }) => {
   const [switching, setSwitching] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [error, setError] = useState(null)
+ 
 
+  const handleEditPost = () => setEditing(true);
+
+ 
   return (
     <div className="bg-slate-400 mt-4 p-4">
       <h2>Posts</h2>
@@ -20,10 +28,12 @@ const Posts = ({ posts, handleDeletePost, userData }) => {
                             <img
                                 src={post.imageUrl}
                                 alt="Post image"
-                                className="rounded h-34 justify-center items-center"
+                                className="rounded h-full justify-center items-center"
                             />
                         )}
               <small>{new Date(post.createdAt).toLocaleString()}</small>
+              <Editpost editing={editing} post={post} error={error} setError={setError}/>
+
               {userData.username === post.username && (
                 <div>
                   <button
@@ -45,7 +55,7 @@ const Posts = ({ posts, handleDeletePost, userData }) => {
                       </button>
                       <button
                         className="menu-icon"
-                        onClick={() => handleDeletePost(post._id)}
+                        onClick={handleEditPost}
                         title="edit"
                       >
                         <MdEdit />
