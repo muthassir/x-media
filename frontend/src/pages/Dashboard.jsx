@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Posts from "./Posts";
 import {CgProfile} from "react-icons/cg"
+import { IoMdRefresh} from "react-icons/io"
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -11,9 +12,9 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const baseURLS = "https://x-media-bvtm.onrender.com"
+  // const localHost = "http://localhost:3000"
 
-
-  const [swi, setswi] = useState(false);
+  const [switching, setSwitching] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,11 +27,8 @@ const Dashboard = () => {
 
         // Fetch user data
         const userResponse = await axios.get(
-<<<<<<< HEAD
-          `${baseURLS}/user`,
-=======
-          "https://x-media-bvtm.onrender.com",
->>>>>>> 88f9dba249ab2f404be4fc7a38029cb6f7c3c668
+          `${baseURLS}/api/auth/user`,
+
           {
             headers: { Authorization: `Bearer ${token}` },
           }
@@ -40,11 +38,7 @@ const Dashboard = () => {
 
         // Fetch all posts
         const postsResponse = await axios.get(
-<<<<<<< HEAD
-          `${baseURLS}/posts`
-=======
-          "https://x-media-bvtm.onrender.com"
->>>>>>> 88f9dba249ab2f404be4fc7a38029cb6f7c3c668
+          `${baseURLS}/api/auth/posts`
         );
         setPosts(postsResponse.data);
       } catch (error) {
@@ -66,11 +60,7 @@ const Dashboard = () => {
   const handleDeletePost = async (postId) => {
     try {
       const token = localStorage.getItem("token");
-<<<<<<< HEAD
-      await axios.delete(`${baseURLS}/posts/${postId}`, {
-=======
-      await axios.delete('https://x-media-bvtm.onrender.com', {
->>>>>>> 88f9dba249ab2f404be4fc7a38029cb6f7c3c668
+      await axios.delete(`${baseURLS}/api/auth/posts/${postId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setPosts(posts.filter((post) => post._id !== postId)); // Remove deleted post from state
@@ -88,11 +78,11 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1 className="text-center mt-4">X-Media</h1>
+      <h1 className="text-center mt-4 text-yellow-400">Postify</h1>
       {loading ? (
-        <p classname="mt-4">Loading...</p>
+        <p className="mt-4 text-center text-white">Loading...</p>
       ) : error ? (
-        <p className="text-red-700">{error}</p>
+        <p className="text-red-700 text-center">{error}</p>
       ) : userData ? (
         <>
           <div className="dashboard">
@@ -105,10 +95,10 @@ const Dashboard = () => {
                 }}
               >
                 <h3>Dashboard</h3>
-                <button onClick={()=>setswi(!swi)} className="profileBtn"><CgProfile size={30} /></button>
-             {swi &&  <div className="bg-slate-600">
-              <p>
-                  <strong>Welcome:</strong> {userData.username}
+                <button onClick={()=>setSwitching(!switching)} className="profileBtn mt-2" title="Account"><CgProfile size={30} /></button>
+             {switching &&  <div className="bg-slate-600 rounded m-2 p-2">
+              <p className="text-white">
+                  <strong>Username:</strong> {userData.username}
                 </p>
                 <button onClick={handleLogout} className="bg-red-500 rounded p-2 cursor-pointer m-2 text-white"> Logout </button>
               </div>}
@@ -117,6 +107,7 @@ const Dashboard = () => {
              <Link to="/createpost"><button className="btn mt-4">Create Post</button></Link> 
 
             {/* Posts List */}
+            <button onClick={()=>navigate("/")} title="refresh" className="mt-2 text-yellow-400 flex justify-center items-center cursor-pointer"> <IoMdRefresh size={30} /></button>
                 <Posts posts={posts} 
                 handleDeletePost={handleDeletePost}
                 userData={userData}

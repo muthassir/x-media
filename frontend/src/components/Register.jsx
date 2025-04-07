@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import logo from "../assets/InShot_20250406_155054086.png"
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -9,6 +10,7 @@ const Register = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const baseURLS = "https://x-media-bvtm.onrender.com"
+  // const localHost = "http://localhost:3000"
 
 
 
@@ -16,11 +18,7 @@ const Register = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-<<<<<<< HEAD
-        `${baseURLS}/register`,
-=======
-        "https://x-media-bvtm.onrender.com",
->>>>>>> 88f9dba249ab2f404be4fc7a38029cb6f7c3c668
+        `${baseURLS}/api/auth/register`,
         { email, username, password }
       );
       localStorage.setItem("token", response.data.token);
@@ -32,8 +30,7 @@ const Register = () => {
   };
 
   return (
-    <div className="login">
-      <h1>WebX</h1>
+    <div className="login text-white">
       <h2>Register</h2>
       {error && <p className="text-red-600">{error}</p>}
       <form onSubmit={handleSubmit} className="flex flex-col">
@@ -73,7 +70,7 @@ const Register = () => {
         Already have an account? <Link to="/" ><span href="/" className="text-green-700">Login</span></Link>
       </p>
       </div>
-      
+      <img src={logo} alt="logo" className='logo' />           
     </div>
   );
 };

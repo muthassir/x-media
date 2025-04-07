@@ -11,12 +11,12 @@ body {
   display: flex; 
   justify-content: center;
   align-items: center;
+  background-color: #0f0616;
 }
 button:hover{
-  background: transparent;
-  color: black;
-  border: 2px solid green;
   transition: 1s;
+  background-color: yellow;
+  color: black;
 }
 h1 {
   font-size: 3.2em;
@@ -24,6 +24,9 @@ h1 {
 }
 h2{
   font-size: 2.5em;
+}
+.logo{
+  height: 160px;
 }
 .inp{
   @apply w-64 p-2 m-4  border-2 rounded
@@ -59,4 +62,36 @@ h2{
   padding: 5px;
   border-radius: 50px;
   color: white;
+}
+.posts{
+  background: "#f8f9fa";
+  padding: "15px";
+  border-radius: "8px";
+  margin-bottom: "10px";
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.menu-icon{
+  color: black;
+  padding: 4px;
+  border-radius: 50%;
+}
+.menu-icon:hover{
+  box-shadow: 2px 2px 4px;
+  border: none;
+  color:black;
+  cursor: pointer;
+}
+.menu-icon:focus{
+  box-shadow: 2px 2px 4px;
+  border: none;
+  color:black;
+  cursor: pointer;
+}
+.menu-icon-box{
+  border: 1px solid grey;
+  border-radius: 5px;
+  margin-left: 3px;
 }

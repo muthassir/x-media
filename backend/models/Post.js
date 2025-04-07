@@ -14,6 +14,9 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    imageUrl: { 
+        type: String,
+         default: '' }, // Add imageUrl field
     createdAt: {
         type: Date,
         default: Date.now

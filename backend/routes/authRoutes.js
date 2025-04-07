@@ -1,76 +1,4 @@
-// const express = require('express');
-// const router = express.Router();
-// const User = require('../models/userModel.js');
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
-// const authMiddleware = require('../middlewares/authMiddleware.js');
-// require('dotenv').config();
 
-// // Register
-// router.post('/register', async (req, res) => {
-//     const { email, username, password } = req.body;
-//     try {
-//         let user = await User.findOne({ $or: [{ email }, { username }] });
-//         if (user) {
-//             return res.status(400).json({ message: 'User already exists' });
-//         }
-
-//         user = new User({ email, username, password });
-//         await user.save();
-
-//         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-//         res.status(201).json({
-//             token,
-//             user: { email: user.email, username: user.username },
-//             message: 'User created successfully'
-//         });
-//     } catch (error) {
-//         console.error('Register error:', error);
-//         res.status(500).json({ message: 'Server error' });
-//     }
-// });
-
-// // Login
-// router.post('/login', async (req, res) => {
-//     const { email, password } = req.body;
-//     try {
-//         const user = await User.findOne({ email });
-//         if (!user) {
-//             return res.status(400).json({ message: 'Invalid credentials' });
-//         }
-
-//         const isMatch = await bcrypt.compare(password, user.password);
-//         if (!isMatch) {
-//             return res.status(400).json({ message: 'Invalid credentials' });
-//         }
-
-//         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-//         res.json({
-//             token,
-//             user: { email: user.email, username: user.username },
-//             message: 'Login successful'
-//         });
-//     } catch (error) {
-//         console.error('Login error:', error);
-//         res.status(500).json({ message: 'Server error' });
-//     }
-// });
-
-// // Get User Data (Protected)
-// router.get('/user', authMiddleware, async (req, res) => {
-//     try {
-//         const user = await User.findById(req.user.userId).select('-password');
-//         if (!user) {
-//             return res.status(404).json({ message: 'User not found' });
-//         }
-//         res.json({ email: user.email, username: user.username });
-//     } catch (error) {
-//         console.error('Get user data error:', error);
-//         res.status(500).json({ message: 'Server error' });
-//     }
-// });
-
-// module.exports = router;
 const express = require('express');
 const router = express.Router();
 const User = require('../models/userModel.js');
@@ -150,7 +78,7 @@ router.get('/user', authMiddleware, async (req, res) => {
 
 // Create Post (Protected)
 router.post('/posts', authMiddleware, async (req, res) => {
-    const { content } = req.body;
+    const { content, imageUrl } = req.body;
     try {
         const user = await User.findById(req.user.userId);
         if (!user) {
@@ -159,6 +87,7 @@ router.post('/posts', authMiddleware, async (req, res) => {
 
         const post = new Post({
             content,
+            imageUrl: imageUrl || '', // Default to empty string if not provided
             user: req.user.userId,
             username: user.username
         });
