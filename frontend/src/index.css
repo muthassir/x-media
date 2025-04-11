@@ -8,12 +8,12 @@
 }
 body {
   margin: 0;
-  display: flex; 
+  display: flex;
   justify-content: center;
   align-items: center;
   background-color: #0f0616;
 }
-button:hover{
+button:hover {
   transition: 1s;
   background-color: yellow;
   color: black;
@@ -22,29 +22,28 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
-h2{
+h2 {
   font-size: 2.5em;
 }
-.logo{
+.logo {
   height: 160px;
 }
-.inp{
-  @apply w-64 p-2 m-4  border-2 rounded
+.inp {
+  @apply w-64 p-2 m-4  border-2 rounded;
 }
-.btn{
-  @apply  w-64 bg-green-600 text-white  h-10 rounded cursor-pointer
+.btn {
+  @apply w-64 bg-green-600 text-white  h-10 rounded cursor-pointer;
 }
 
-.login{
-  display:flex;
+.login {
+  display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   height: 100vh;
 }
 
-
-.dashboard{
+.dashboard {
   display: flex;
   flex-direction: column;
   padding: 15px;
@@ -53,45 +52,97 @@ h2{
   justify-content: space-between;
   text-align: center;
 }
-.profileBtn{
-   cursor: pointer;
+.profileBtn {
+  cursor: pointer;
 }
-.profileBtn:hover{
+.profileBtn:hover {
   border: none;
   background-color: #5e6e7f;
   padding: 5px;
   border-radius: 50px;
   color: white;
 }
-.posts{
-  background: "#f8f9fa";
-  padding: "15px";
-  border-radius: "8px";
-  margin-bottom: "10px";
+.posts {
+ 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.menu-icon{
+.menu-icon {
   color: black;
   padding: 4px;
   border-radius: 50%;
 }
-.menu-icon:hover{
+.menu-icon:hover {
   box-shadow: 2px 2px 4px;
   border: none;
-  color:black;
+  color: black;
   cursor: pointer;
 }
-.menu-icon:focus{
+.menu-icon:focus {
   box-shadow: 2px 2px 4px;
   border: none;
-  color:black;
+  color: black;
   cursor: pointer;
 }
-.menu-icon-box{
+.menu-icon-box {
   border: 1px solid grey;
   border-radius: 5px;
   margin-left: 3px;
+}
+.create-post {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 120px;
+}
+.create-post textarea {
+  width: 100%;
+  padding: 10px;
+  min-height: 100px;
+  margin-top: 15px;
+  border: 2px solid black;
+}
+.send {
+  padding: 10px 20px;
+  background: yellow;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.back{
+  padding: 10px 20px;
+  background: #d21f3c;
+  border: none;
+  margin-top: 10px;
+  cursor: pointer;
+}
+.heart:hover{
+  transition: 1s;
+  background-color: transparent;
+  color: red;
+}
+
+/* loading animation */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+margin-top: 130px;
+  /* You can add other styles for the container if needed */
+}
+
+.spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1); /* Light grey border */
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  border-left-color: #e4d71c; /* Blue color for the moving part */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

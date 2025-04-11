@@ -155,4 +155,42 @@ router.delete('/posts/:id', authMiddleware, async (req, res) => {
     }
 });
 
+// // likes
+
+router.post("/posts/:id/like", authMiddleware, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+
+        let userId;
+        if (req.user && req.user._id) {
+            userId = req.user._id;
+        } else if (req.user && req.user.userId) {
+            userId = req.user.userId;
+        } else {
+            return res.status(401).json({ message: "Unauthorized" }); // Or handle appropriately
+        }
+
+        const likedIndex = post.likes.indexOf(userId);
+
+        if (likedIndex === -1) {
+            post.likes.push(userId);
+        } else {
+            post.likes.splice(likedIndex, 1);
+        }
+
+        await post.save();
+        res.json({ post });
+    } catch (err) {
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+// comments
+
+
+
+
 module.exports = router;

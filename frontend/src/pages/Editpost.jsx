@@ -1,42 +1,38 @@
 import React from 'react'
 import { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { usePosts } from '../context/PostContext';
 
 
-const Editpost = ({editing, post, setEditing, setError, errors}) => {
+const Editpost = ({editing}) => {
+    const {post, error} = usePosts()
     const [editedContent, setEditedContent] = useState(post.content);
-    const navigate = useNavigate()
-    
-  const baseURLS = "https://x-media-bvtm.onrender.com"
-//   const localHost = "http://localhost:3000"
 
+    // edit post
+  const handleSaveEdit = async () => {
+    try {
+        const token = localStorage.getItem('token')
+        const response = await axios.put(
+            `${localHost}/api/auth/posts/${post._id}`,
+            { content: editedContent },
+            { headers: { Authorization: `Bearer ${token}` } }
+        );
+        setPost(response.data.post)
+        setEditing(false)
+        setError('')
+        navigate("/")
+    } catch (error) {
+        console.error('Error editing post:', error)
+        setError(error.response?.data?.message || 'Failed to edit post')
+        navigate("/")
+    }
+}
 
-    const handleSaveEdit = async () => {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await axios.put(
-                `${baseURLS}/api/auth/posts/${post._id}`,
-                { content: editedContent },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
-            // onPostUpdated(response.data.post);
-            setEditing(false);
-            setError('');
-            navigate("/")
-        } catch (error) {
-            console.error('Error editing post:', error);
-            setError(error.response?.data?.message || 'Failed to edit post');
-            navigate("/")
-        }
-    };
-
-    const handleCancelEdit = () => {
-        setEditing(false);
-        setEditedContent(post.content);
-        setError('');
-    };
-
+const handleCancelEdit = () => {
+    setEditing(false);
+    setEditedContent(post.content);
+    setError('')
+    navigate("/")
+};
 
   return (
     <div>
@@ -59,7 +55,7 @@ const Editpost = ({editing, post, setEditing, setError, errors}) => {
                     >
                         Cancel
                     </button>
-                    {errors && <p style={{ color: 'red', marginTop: '5px' }}>{error}</p>}
+                    {error && <p style={{ color: 'red', marginTop: '5px' }}>{error}</p>}
                 </div> : null}
     </div>
   )

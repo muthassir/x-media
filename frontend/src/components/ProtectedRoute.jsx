@@ -7,12 +7,17 @@ const ProtectedRoute = ({ children }) => {
 
     // If authenticated and trying to access login or register, redirect to dashboard
     if (token && (location.pathname === '/' || location.pathname === '/register')) {
-        return <Navigate to="/dashboard" replace />;
+        return <Navigate to="/dashboard"  replace/> ;
     }
+    if (token && (location.pathname === '/createpost' )) {
+        return <Navigate to="/createpost" replace /> ;
+    }
+   
 
+  
     // If not authenticated and trying to access dashboard, redirect to login
-    if (!token && location.pathname === '/dashboard') {
-        return <Navigate to="/" replace />;
+    if (!token && location.pathname === '/dashboard' || location.pathname === '/createpost' ) {
+        return (<Navigate to="/" replace />  ) ;
     }
 
     // Otherwise, render the children
@@ -20,3 +25,6 @@ const ProtectedRoute = ({ children }) => {
 };
 
 export default ProtectedRoute;
+
+
+
