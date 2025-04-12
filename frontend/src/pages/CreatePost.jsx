@@ -6,13 +6,13 @@ import { useState } from "react";
 import axios from "axios";
 
 export const CreatePost = () => {
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const localHost = "http://localhost:3000";
-  // const localHost  = "https://x-media-bvtm.onrender.com"
+  // const localHost = "https://x-media-bvtm.onrender.com";
 
   const [posts, setPosts] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   // Cloudinary Config
   const cloudName = "de13d1vnc";
@@ -85,7 +85,13 @@ export const CreatePost = () => {
           disabled={loading}
         />
         <div className="flex flex-col">
-        <button type="submit" className={`send rounded ${loading ? 'opacity-50 cursor-not-allowed' : ''}`} disabled={loading}>
+          <button
+            type="submit"
+            className={`send rounded ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={loading}
+          >
             {loading ? "Sharing..." : "Share"}
           </button>
         </div>

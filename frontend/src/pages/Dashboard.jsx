@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Posts from "./Posts";
-import { CgProfile } from "react-icons/cg";
 import { IoMdRefresh } from "react-icons/io";
 import axios from "axios";
 import Loading from "../components/Loading";
+import Profile from "./Profile";
 
 const Dashboard = () => {
   const localHost = "http://localhost:3000";
-  // const localHost  = "https://x-media-bvtm.onrender.com"
+  // const localHost = "https://x-media-bvtm.onrender.com";
+
   const [switching, setSwitching] = useState(false);
   const navigate = useNavigate();
   const [error, setError] = useState("");
@@ -80,6 +81,7 @@ const Dashboard = () => {
     navigate("/");
   };
 
+  // delete post
   const handleDeletePost = async (postId) => {
     try {
       const token = localStorage.getItem("token");
@@ -110,9 +112,7 @@ const Dashboard = () => {
       setError(error.response?.data?.message || "Failed to like post");
     }
   };
-   
-
-
+  // comments
 
   // ends here
   return (
@@ -127,41 +127,20 @@ const Dashboard = () => {
       ) : userData ? (
         <>
           <div className="dashboard">
-            <div
-              style={{
-                background: "#f8f9fa",
-                padding: "20px",
-                borderRadius: "8px",
-              }}
-            >
-              <h3>Dashboard</h3>
-              <button
-                onClick={() => setSwitching(!switching)}
-                className="profileBtn mt-2"
-                title="Account"
-              >
-                <CgProfile size={30} />
-              </button>
-              {switching && (
-                <div className="bg-slate-600 rounded m-2 p-2">
-                  <p className="text-white">
-                    <strong>Username:</strong> {userData.username}
-                  </p>
-                  <button
-                    onClick={handleLogout}
-                    className="bg-red-500 rounded p-2 cursor-pointer m-2 text-white"
-                  >
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
-            {/* Post navigate button */}
+            {/* profile component */}
+            <Profile
+              userData={userData}
+              switching={switching}
+              setSwitching={setSwitching}
+              handleLogout={handleLogout}
+            />
+
+            {/* create post button */}
             <Link to="/createpost">
               <button className="btn mt-4">Create Post</button>
             </Link>
 
-            {/* Posts List */}
+            {/* Posts refresh */}
             <button
               onClick={() => navigate("/")}
               title="refresh"
@@ -193,7 +172,6 @@ const Dashboard = () => {
               handleDeletePost={handleDeletePost}
               filteredPost={filteredPost}
               handleLikePost={handleLikePost}
-             
             />
           </div>
         </>

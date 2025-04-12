@@ -112,27 +112,27 @@ router.get('/posts', async (req, res) => {
 });
 
 // Edit Post (Protected)
-router.put('/posts/:id', authMiddleware, async (req, res) => {
-    const { content } = req.body;
-    try {
-        const post = await Post.findById(req.params.id);
-        if (!post) {
-            return res.status(404).json({ message: 'Post not found' });
-        }
+// router.put('/posts/:id', authMiddleware, async (req, res) => {
+//     const { content } = req.body;
+//     try {
+//         const post = await Post.findById(req.params.id);
+//         if (!post) {
+//             return res.status(404).json({ message: 'Post not found' });
+//         }
 
-        if (post.user.toString() !== req.user.userId) {
-            return res.status(403).json({ message: 'Unauthorized to edit this post' });
-        }
+//         if (post.user.toString() !== req.user.userId) {
+//             return res.status(403).json({ message: 'Unauthorized to edit this post' });
+//         }
 
-        post.content = content;
-        await post.save();
+//         post.content = content;
+//         await post.save();
 
-        res.json({ message: 'Post updated', post });
-    } catch (error) {
-        console.error('Edit post error:', error);
-        res.status(500).json({ message: 'Server error' });
-    }
-});
+//         res.json({ message: 'Post updated', post });
+//     } catch (error) {
+//         console.error('Edit post error:', error);
+//         res.status(500).json({ message: 'Server error' });
+//     }
+// });
 
 // Delete Post (Protected)
 router.delete('/posts/:id', authMiddleware, async (req, res) => {
@@ -189,6 +189,89 @@ router.post("/posts/:id/like", authMiddleware, async (req, res) => {
 });
 
 // comments
+router.post('/posts/:postId/comments', authMiddleware, async (req, res) => {
+    try {
+        const postId = req.params.postId;
+        const { text } = req.body;
+        const userId = req.user.userId;
+
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        const user = await User.findById(userId).select('username');
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        const newComment = {
+            user: userId,
+            username: user.username,
+            text: text,
+            createdAt: new Date()
+        };
+
+        post.comments.push(newComment);
+        await post.save();
+
+        res.status(201).json({ message: 'Comment added', comment: newComment });
+
+    } catch (error) {
+        console.error('Add comment error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// Get all comments for a post
+router.get('/posts/:postId/comments', async (req, res) => {
+    try {
+        const postId = req.params.postId;
+        const post = await Post.findById(postId).select('comments'); // Only fetch the comments array
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+        res.json(post.comments);
+    } catch (error) {
+        console.error('Get comments error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+// delete comment
+router.delete('/posts/:postId/comments/:commentId', authMiddleware, async (req, res) => {
+    try {
+        const { postId, commentId } = req.params;
+        const userId = req.user.userId;
+
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).json({ message: 'Post not found' });
+        }
+
+        // Find the comment within the post's comments array
+        const commentToDelete = post.comments.id(commentId);
+        if (!commentToDelete) {
+            return res.status(404).json({ message: 'Comment not found' });
+        }
+
+        // Authorization check: Allow only the comment author or the post author to delete
+        if (commentToDelete.user.toString() !== userId && post.user.toString() !== userId) {
+            return res.status(403).json({ message: 'Unauthorized to delete this comment' });
+        }
+
+        // Remove the comment
+        post.comments.pull(commentId);
+        await post.save();
+
+        res.json({ message: 'Comment deleted' });
+
+    } catch (error) {
+        console.error('Delete comment error:', error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
 
 
 
